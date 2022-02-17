@@ -1,4 +1,3 @@
-
 /**** Templates and Containers ****/
 
 const chairsContainer = document.getElementById("chairs-container")
@@ -37,21 +36,17 @@ const CHAIRS = [
     },
     {
         id: 3,
-        title: "The Rebecca",
+        title: "The Joey",
         description: "Simply marvelous",
         image: "images/therebecca.jpg",
         price: "$350"
     }
 ]
 
-
-/**** Initial Render *****/ 
-
 window.addEventListener("load", () => {
     renderChairList();
     renderShoppingCart();
-});
-
+})
 
 /**** Render Chairs ****/
 
@@ -74,14 +69,12 @@ function renderChair(chair) {
     return chairElement;
 }
 
-
 /**** Render Shopping Car ****/
 
 // Build (and add to the page) the HTML for the entire shopping cart
 function renderShoppingCart() {
-    console.log(shoppingCart);
     emptyElement(cartContainer);
-    shoppingCart.forEach(item => cartContainer.appendChild(renderShoppingItem(item)));
+    shoppingCart.forEach( item => cartContainer.appendChild( renderShoppingItem(item) ) );
     if(shoppingCart.length === 0) {
         cartContainer.appendChild(emptyCartTemplate.cloneNode(true));
     }
@@ -96,8 +89,6 @@ function renderShoppingItem(item) {
     return cartItem;
 }
 
-
-/***** Event Listeners *****/
 
 function addToCart(chair) {
     // Update the data
@@ -125,7 +116,6 @@ function removeFromCart(id) {
     // Rerender the shopping cart part of the page
     renderShoppingCart();
 }
-
 
 /**** Utility *****/ 
 

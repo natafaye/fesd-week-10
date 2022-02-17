@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button onclick="makeSomething()">Make Something</button>
+    <button onclick="deleteTop()">Delete Top</button>
+    <button onclick="clearItAll()">Clear It All</button>
+    <div id="place-to-put">
+
+    </div>
+    <script>
+        const placeToPut = document.getElementById("place-to-put");
+
+        function makeSomething() {
+            const newImg = document.createElement("img");
+            newImg.src = "images/chair.jpg";
+            newImg.width = "200"; // hacky
+            console.log(newImg);
+            placeToPut.appendChild(newImg);
+
+            const newImg2 = newImg.cloneNode(true);
+            // const newImg2 = document.createElement("img");
+            // newImg2.src = "images/chair.jpg";
+            // newImg2.width = "200"; // hacky
+            console.log(newImg2)
+
+            placeToPut.appendChild(newImg2);
+        }
+
+        function deleteTop() {
+            placeToPut.removeChild(placeToPut.firstElementChild)
+        }
+
+        function clearItAll() {
+            while(placeToPut.firstChild) {
+                placeToPut.removeChild(placeToPut.firstChild)
+            }
+        }
+    </script>
+</body>
+</html>
+
+<!-- GREAT BEFORE -->

@@ -1,27 +1,16 @@
 
 const cartContainer = document.getElementById("cart-container");
-const emptyCartText = document.getElementById("empty-cart-text");
+const emptyCartMessage = document.getElementById("empty-cart-text");
 const shoppingCart = [];
 
-function addToCart(chairName) {
-    // Update the data
-    shoppingCart.push(chairName)
+function addToCart(chair) {
+    // Adds to the data
+    shoppingCart.push(chair);
 
-    // get rid of the empty message
-    emptyCartText.remove();
-
-    // Create and set up list item and the button inside
-    const listItem = renderListItem(chairName);
-
-    // Add list item to the ul (and the page);
-    cartContainer.appendChild(listItem);
-}
-
-function renderListItem(chairName) {
-    // create and set up list item
-    const newListItem = document.createElement("li");
-    newListItem.classList.add("list-group-item")
-    newListItem.textContent = chairName;
+    const cartItem = document.createElement("li");
+    cartItem.classList.add("list-group-item");
+    cartItem.textContent = chair;
+    cartContainer.appendChild(cartItem)
 
     // Create and set up button
     const button = document.createElement("button");
@@ -30,15 +19,29 @@ function renderListItem(chairName) {
     button.classList.add("btn-sm");
     button.classList.add("float-end");
     button.textContent = "-";
-    button.addEventListener("click", () => newListItem.remove())
+
+    // Make the button work
+    button.addEventListener("click", () => {
+        cartItem.remove();
+
+        // Removes from the data
+        // Will not work perfectly
+        const index = shoppingCart.indexOf(chair);
+        shoppingCart.splice(index, 1);
+
+        // we could add more logic here to bring the emptyCartMessage back
+    })
 
     // Add the button to the list item
-    newListItem.appendChild(button);
+    cartItem.appendChild(button);
 
-    return newListItem;
+    // Make sure empty cart message is not in the page
+    emptyCartMessage.remove();
 }
 
-// We aren't using this function, but we could instead of the arrow function on line 33
-function removeFromCart(e) {
-    e.target.parentNode.remove();
+function checkOut() {
+    
 }
+
+// GREAT BEFORE
+
