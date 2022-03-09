@@ -1,47 +1,24 @@
 
 const cartContainer = document.getElementById("cart-container");
-const emptyCartMessage = document.getElementById("empty-cart-text");
-const shoppingCart = [];
+const emptyCartText = document.getElementById("empty-cart-text");
 
 function addToCart(chair) {
-    // Adds to the data
-    shoppingCart.push(chair);
+    emptyCartText.remove();
 
-    const cartItem = document.createElement("li");
-    cartItem.classList.add("list-group-item");
-    cartItem.textContent = chair;
-    cartContainer.appendChild(cartItem)
+    const listItem = document.createElement("li");
+    listItem.textContent = chair;
+    listItem.classList.add("list-group-item")
 
-    // Create and set up button
     const button = document.createElement("button");
     button.classList.add("btn");
     button.classList.add("btn-danger");
     button.classList.add("btn-sm");
     button.classList.add("float-end");
     button.textContent = "-";
-
-    // Make the button work
     button.addEventListener("click", () => {
-        cartItem.remove();
-
-        // Removes from the data
-        // Will not work perfectly
-        const index = shoppingCart.indexOf(chair);
-        shoppingCart.splice(index, 1);
-
-        // we could add more logic here to bring the emptyCartMessage back
+        listItem.remove();
     })
+    listItem.appendChild(button);
 
-    // Add the button to the list item
-    cartItem.appendChild(button);
-
-    // Make sure empty cart message is not in the page
-    emptyCartMessage.remove();
+    cartContainer.appendChild(listItem);
 }
-
-function checkOut() {
-    
-}
-
-// GREAT BEFORE
-
