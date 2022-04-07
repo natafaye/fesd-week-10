@@ -1,4 +1,3 @@
-
 /**** Templates and Containers ****/
 
 const chairsContainer = document.getElementById("chairs-container")
@@ -36,7 +35,7 @@ const CHAIRS = [
     },
     {
         id: 3,
-        title: "The Rebecca",
+        title: "The Joey",
         description: "Simply marvelous",
         image: "images/therebecca.jpg",
         price: "$350"
@@ -51,16 +50,14 @@ window.addEventListener("load", () => {
 /**** Render Chairs ****/
 
 function renderChairList() {
-    // Empty out chairs container
     emptyElement(chairsContainer);
-    // Fill it up based on what's in the CHAIRS array
-    for(let chair of CHAIRS) {
-        const chairElement = renderChair(chair);
-        chairsContainer.appendChild(chairElement);
+    for(const chair of CHAIRS) {
+        const chairCard = renderChairCard(chair);
+        chairsContainer.appendChild(chairCard);
     }
 }
 
-function renderChair(chair) {
+function renderChairCard(chair) {
     const chairElement = chairTemplate.cloneNode(true);
     chairElement.querySelector("#chair-image").src = chair.image;
     chairElement.querySelector("#chair-title").textContent = chair.title;
@@ -69,17 +66,20 @@ function renderChair(chair) {
     return chairElement;
 }
 
-/**** Render Shopping Car ****/
+/**** Render Cart ****/
 
 function renderShoppingCart() {
     emptyElement(cartContainer);
-    shoppingCart.forEach(item => cartContainer.appendChild( renderShoppingCartItem(item) ))
+    for(const item of shoppingCart) {
+        const shoppingListItem = renderShoppingListItem(item);
+        cartContainer.appendChild(shoppingListItem);
+    }
     if(shoppingCart.length === 0) {
         cartContainer.appendChild(emptyCartTemplate.cloneNode(true));
     }
 }
 
-function renderShoppingCartItem(item) {
+function renderShoppingListItem(item) {
     const cartItem = cartItemTemplate.cloneNode(true);
     cartItem.querySelector("#item-number").textContent = item.number;
     cartItem.querySelector("#item-text").textContent = item.text;
@@ -87,10 +87,9 @@ function renderShoppingCartItem(item) {
     return cartItem;
 }
 
-/***** Event Listeners *****/
+/**** Event Handlers ****/
 
 function addToCart(chair) {
-    // Update the data
     let item = shoppingCart.find(i => i.id === chair.id);
     if(!item) {
         item = {
@@ -101,25 +100,17 @@ function addToCart(chair) {
         shoppingCart.push(item);
     }
     item.number++;
-    // Rerender the shopping cart part of the page
     renderShoppingCart();
 }
 
-function removeFromCart(id) {
-    // Update the data
-    const item = shoppingCart.find(i => i.id === id);
+function removeFromCart(chairId) {
+    const item = shoppingCart.find(i => i.id === chairId);
     item.number--;
     if(item.number === 0) {
         shoppingCart.splice(shoppingCart.indexOf(item), 1);
     }
-    // Rerender the shopping cart part of the page
     renderShoppingCart();
 }
-
-// function clearCart() {
-//     shoppingCart = [];
-//     renderShoppingCart();
-// }
 
 /**** Utility *****/ 
 

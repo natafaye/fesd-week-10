@@ -1,46 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
-    <h1>My List</h1>
-    <input type="text" id="my-textbox"/>
-    <ul id="my-list"></ul>
+    <input type="text" id="textbox-thing" />
+    <button onclick="addTodo()">Add Todo</button>
+    <button onclick="removeLastTodo()">Remove Last Todo</button>
+    <button onclick="removeAllTodos()">Remove All Todos</button>
+    <ul id="list-of-items">
+    </ul>
     <script>
-        const list = document.getElementById("my-list");
-        //const list = document.querySelector("#my-list");
-        //const list = document.body.firstElementChild;
+        //const list = document.getElementById("list-of-items")
+        const list = document.querySelector("#list-of-items")
+        const firstListItem = list.firstElementChild;
 
-        const textbox = document.getElementById("my-textbox");
-        textbox.value = "heloo there"
+        const textbox = document.getElementById("textbox-thing");
+        console.log(textbox);
 
-        for(let i = 0; i < 5; i++) {
-            let newLi = document.createElement("li");
-            newLi.textContent = "Hi there! " + i
-            newLi.addEventListener("click", () => {
-                newLi.remove();
-            })
+        function addTodo() {
+            const newLi = document.createElement("li") // <li></li>
+            newLi.textContent = textbox.value;
             list.appendChild(newLi);
+
+            newLi.addEventListener("click", removeTodo)
+
+            textbox.value = "";
         }
 
-        // newLi = newLi.cloneNode(true);
-        // newLi.addEventListener("click", () => {
-        //     newLi.remove();
-        // })
-        // list.appendChild(newLi2);
+        function removeLastTodo() {
+            list.removeChild(list.lastElementChild)
+        }
 
-        //newLi2.remove();
+        function removeAllTodos() {
+            while(list.firstChild) {
+                list.removeChild(list.firstChild)
+            }
+        }
 
-        // while(list.firstChild) {
-        //     list.removeChild(list.firstChild)
-        // }
+        function removeTodo(event) {
+            event.target.remove()
+        }
 
     </script>
 </body>
+
 </html>
 
 <!-- GREAT BEFORE -->
