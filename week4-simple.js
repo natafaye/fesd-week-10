@@ -1,24 +1,25 @@
-
-const cartContainer = document.getElementById("cart-container");
-const emptyCartText = document.getElementById("empty-cart-text");
+const list = document.getElementById("cart-container");
+const emptyListItem = document.getElementById("empty-cart-text");
 
 function addToCart(chair) {
-    emptyCartText.remove();
+    emptyListItem.remove();
     
-    const listItem = document.createElement("li");
-    listItem.textContent = chair;
-    listItem.classList.add("list-group-item");
+    const li = document.createElement("li");
+    li.classList.add("list-group-item");
+    li.textContent = chair;
 
-    const button = document.createElement("button");
+    const button = document.createElement("button")
     button.classList.add("btn");
     button.classList.add("btn-danger");
-    button.classList.add("btn-sm");
-    button.classList.add("float-end");
-    button.textContent = "-";
+    button.textContent = "Delete";
     button.addEventListener("click", () => {
-         listItem.remove();
+        li.remove();
     })
-    listItem.appendChild(button);
+    li.appendChild(button);
 
-    cartContainer.appendChild(listItem);
+    list.appendChild(li);
+}
+
+function checkOut() {
+    
 }

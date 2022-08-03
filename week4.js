@@ -9,8 +9,6 @@ const chairTemplate = document.getElementById("chair-template");
 
 /**** Data ****/
 
-const shoppingCart = [];
-
 const CHAIRS = [
     {
         id: 0,
@@ -35,51 +33,54 @@ const CHAIRS = [
     },
     {
         id: 3,
-        title: "The Joey",
+        title: "The Rebecca",
         description: "Simply marvelous",
         image: "images/therebecca.jpg",
         price: "$350"
     }
 ]
 
+const shoppingCart = [];
+
+/*** Loading In *****/
+
 window.addEventListener("load", () => {
     renderChairList();
     renderShoppingCart();
 })
 
-/**** Render Chairs ****/
+/*** Render Chairs ***/
 
 function renderChairList() {
+    // empty out the chairs container
     emptyElement(chairsContainer);
-    for(const chair of CHAIRS) {
-        const chairCard = renderChairCard(chair);
-        chairsContainer.appendChild(chairCard);
+    // fill it up based on the CHAIRS array
+    for(let chair of CHAIRS) {
+        const chairNode = renderChair(chair)
+        chairsContainer.appendChild(chairNode)
     }
 }
 
-function renderChairCard(chair) {
+function renderChair(chairData) {
     const chairElement = chairTemplate.cloneNode(true);
-    chairElement.querySelector("#chair-image").src = chair.image;
-    chairElement.querySelector("#chair-title").textContent = chair.title;
-    chairElement.querySelector("#chair-description").textContent = chair.description;
-    chairElement.querySelector("#chair-buy-button").addEventListener("click", () => addToCart(chair));
+    chairElement.querySelector("#chair-image").src = chairData.image;
+    chairElement.querySelector("#chair-title").textContent = chairData.title;
+    chairElement.querySelector("#chair-description").textContent = chairData.description;
+    chairElement.querySelector("#chair-buy-button").addEventListener("click", () => addToCart(chairData));
     return chairElement;
 }
 
-/**** Render Cart ****/
+/*** Render Shopping Cart ***/
 
 function renderShoppingCart() {
     emptyElement(cartContainer);
-    for(const item of shoppingCart) {
-        const shoppingListItem = renderShoppingListItem(item);
-        cartContainer.appendChild(shoppingListItem);
-    }
+    shoppingCart.forEach(item => cartContainer.appendChild( renderShoppingCartItem(item) ))
     if(shoppingCart.length === 0) {
         cartContainer.appendChild(emptyCartTemplate.cloneNode(true));
     }
 }
 
-function renderShoppingListItem(item) {
+function renderShoppingCartItem(item) {
     const cartItem = cartItemTemplate.cloneNode(true);
     cartItem.querySelector("#item-number").textContent = item.number;
     cartItem.querySelector("#item-text").textContent = item.text;
@@ -87,9 +88,10 @@ function renderShoppingListItem(item) {
     return cartItem;
 }
 
-/**** Event Handlers ****/
+/**** Data Changing Function *****/
 
 function addToCart(chair) {
+    // Update the data
     let item = shoppingCart.find(i => i.id === chair.id);
     if(!item) {
         item = {
@@ -100,15 +102,18 @@ function addToCart(chair) {
         shoppingCart.push(item);
     }
     item.number++;
+    // Rerender the shopping cart part of the page
     renderShoppingCart();
 }
 
-function removeFromCart(chairId) {
-    const item = shoppingCart.find(i => i.id === chairId);
+function removeFromCart(id) {
+    // Update the data
+    const item = shoppingCart.find(i => i.id === id);
     item.number--;
     if(item.number === 0) {
         shoppingCart.splice(shoppingCart.indexOf(item), 1);
     }
+    // Rerender the shopping cart part of the page
     renderShoppingCart();
 }
 

@@ -9,44 +9,44 @@
 </head>
 
 <body>
-    <input type="text" id="textbox-thing" />
-    <button onclick="addTodo()">Add Todo</button>
-    <button onclick="removeLastTodo()">Remove Last Todo</button>
-    <button onclick="removeAllTodos()">Remove All Todos</button>
-    <ul id="list-of-items">
-    </ul>
-    <script>
-        //const list = document.getElementById("list-of-items")
-        const list = document.querySelector("#list-of-items")
-        const firstListItem = list.firstElementChild;
+    <input type="text" id="todo-textbox" onkeypress="onSomethingTyped()"/>
+    <button onclick="addTodo()">Add Todo</button> <!-- id="add-button" -->
+    <ul id="todo-list"></ul>
 
-        const textbox = document.getElementById("textbox-thing");
-        console.log(textbox);
+    <script>
+        // Finding
+        const textbox = document.getElementById("todo-textbox");
+        const list = document.querySelector("#todo-list")
+
+        // Another listening option
+        // const button = document.getElementById("add-button")
+        // button.addEventListener("click", addTodo)
 
         function addTodo() {
-            const newLi = document.createElement("li") // <li></li>
-            newLi.textContent = textbox.value;
-            list.appendChild(newLi);
+            // grab the text in the textbox - reading attributes
+            const todoText = textbox.value;
+            // make a new li - creating
+            const li = document.createElement("li")
+            // put that text in the li - updating attributes
+            li.textContent = todoText;
 
-            newLi.addEventListener("click", removeTodo)
+            // listen to the list item being clicked and delete it
+            li.addEventListener("click", () => {
+                // remove li from the page
+                li.remove();
+            })
 
+            // put the li in the list - moving
+            list.appendChild(li)
+            // clear the textbox
             textbox.value = "";
         }
 
-        function removeLastTodo() {
-            list.removeChild(list.lastElementChild)
-        }
-
-        function removeAllTodos() {
-            while(list.firstChild) {
-                list.removeChild(list.firstChild)
+        function onSomethingTyped() {
+            if(event.keyCode === 13) { // enter key
+                addTodo()
             }
         }
-
-        function removeTodo(event) {
-            event.target.remove()
-        }
-
     </script>
 </body>
 
