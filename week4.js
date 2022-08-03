@@ -9,6 +9,8 @@ const chairTemplate = document.getElementById("chair-template");
 
 /**** Data ****/
 
+const shoppingCart = [];
+
 const CHAIRS = [
     {
         id: 0,
@@ -33,31 +35,29 @@ const CHAIRS = [
     },
     {
         id: 3,
-        title: "The Rebecca",
+        title: "The Lynelle",
         description: "Simply marvelous",
         image: "images/therebecca.jpg",
         price: "$350"
     }
 ]
 
-const shoppingCart = [];
-
-/*** Loading In *****/
+/**** Loading ******/
 
 window.addEventListener("load", () => {
     renderChairList();
     renderShoppingCart();
 })
 
-/*** Render Chairs ***/
+/**** Render Chairs ****/
 
 function renderChairList() {
-    // empty out the chairs container
+    // empty it out
     emptyElement(chairsContainer);
-    // fill it up based on the CHAIRS array
+    // make it look like it should based on the data
     for(let chair of CHAIRS) {
-        const chairNode = renderChair(chair)
-        chairsContainer.appendChild(chairNode)
+        const chairElement = renderChair(chair);
+        chairsContainer.appendChild(chairElement);
     }
 }
 
@@ -70,11 +70,13 @@ function renderChair(chairData) {
     return chairElement;
 }
 
-/*** Render Shopping Cart ***/
+/**** Render Shopping Car ****/
 
 function renderShoppingCart() {
     emptyElement(cartContainer);
+
     shoppingCart.forEach(item => cartContainer.appendChild( renderShoppingCartItem(item) ))
+    // Show the empty message if the shopping cart is empty
     if(shoppingCart.length === 0) {
         cartContainer.appendChild(emptyCartTemplate.cloneNode(true));
     }
@@ -88,7 +90,7 @@ function renderShoppingCartItem(item) {
     return cartItem;
 }
 
-/**** Data Changing Function *****/
+/**** Data Changing Functions / Event Handlers *****/
 
 function addToCart(chair) {
     // Update the data
