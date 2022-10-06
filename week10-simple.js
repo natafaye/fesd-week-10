@@ -12,6 +12,7 @@ function addToCart(chair) {
     const button = document.createElement("button");
     button.classList.add("btn")
     button.classList.add("btn-danger")
+    button.classList.add("ms-2")
     button.textContent = "Delete"
     button.addEventListener("click", () => {
         li.remove();
