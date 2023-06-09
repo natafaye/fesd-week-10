@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,66 +8,54 @@
     <title>Document</title>
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
 </head>
+
 <body>
-    <input type="text" id="textbox" onkeypress="onType()"/>
-    <button onclick="addTodo()">Add Todo</button>
-    <button onclick="clearTodos()">Clear Todos</button>
-    <ul id="todo-container">
-    </ul>
-
+    <input type="text" id="make-input" />
+    <button id="make-button">Make</button> <!-- listen to this button being clicked --><!-- onclick="makeIt()" -->
+    <button onclick="clearAll()">Clear All</button>
+    <ul id="make-list"></ul>
     <script>
+        const makeButton = document.getElementById("make-button")
+        makeButton.addEventListener("click", makeIt)
 
-        const todos = []
-        let nextId = 0; // easy way to make new ids
+        const makeInput = document.getElementById("make-input")
+        const makeList = document.getElementById("make-list")
 
-        const container = document.getElementById("todo-container")
-        const textbox = document.getElementById("textbox")
 
-        function addTodo() {
+        // Data (state)
+        const todoList = []
 
-            // also add it to our data
-            const newTodo = { 
-                id: nextId++, // little hack
-                text: textbox.value 
-            }
-            todos.push(newTodo)
 
-            // code makes an li
-            const newLi = document.createElement("li")
+        // Event handler functions
+        function makeIt() {
 
-            // sets up the li with the right text and such
-            newLi.textContent = textbox.value
-            newLi.addEventListener("click", () => deleteTodo(newTodo.id))
-            newLi.id = "todo-" + newTodo.id
+            const newBabyLi = document.createElement("li") // make the li soul in the Great Before
 
-            // puts the li in the ul
-            container.appendChild(newLi)
+            newBabyLi.textContent = makeInput.value
 
-            // clear the textbox
-            textbox.value = ""
+            todoList.push(makeInput.value)
+
+            newBabyLi.addEventListener("click", () => {
+                const indexToDelete = todoList.indexOf(makeInput.value)
+                todoList.splice(indexToDelete, 1) // broken
+                newBabyLi.remove()
+            })
+
+            makeList.appendChild(newBabyLi) // move it from great before to ul (give it an earth pass)
+
+            makeInput.value = ""
         }
 
-        function onType() {
-            if(event.keyCode === 13) { // the enter key
-                addTodo()
-            }
-        }
-
-        function deleteTodo(idOfTaskToDelete) {
-            const htmlId = "todo-" + idOfTaskToDelete
-            document.getElementById(htmlId).remove()
-        }
-
-        function clearTodos() {
-            while(container.hasChildNodes()) {
-                container.removeChild(container.lastChild)
+        function clearAll() {
+            while (makeList.hasChildNodes()) {
+                makeList.removeChild(makeList.lastChild)
             }
         }
+
     </script>
 </body>
+
 </html>
 
 
-
-
-
+<!-- GREAT BEFORE -->
