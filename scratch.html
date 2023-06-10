@@ -36,7 +36,7 @@
             todoList.push(makeInput.value)
 
             newBabyLi.addEventListener("click", () => {
-                const indexToDelete = todoList.indexOf(makeInput.value)
+                const indexToDelete = todoList.indexOf(makeInput.value) 
                 todoList.splice(indexToDelete, 1) // broken
                 newBabyLi.remove()
             })
