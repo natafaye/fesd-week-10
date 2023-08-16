@@ -10,46 +10,55 @@
 </head>
 
 <body>
-    <input type="text" id="make-input" />
-    <button id="make-button">Make</button> <!-- listen to this button being clicked --><!-- onclick="makeIt()" -->
-    <button onclick="clearAll()">Clear All</button>
-    <ul id="make-list"></ul>
+    <div class="container mt-4">
+        <form class="d-flex gap-3 mb-3 align-items-center">
+            <input type="text" class="form-control" id="create-textbox"/>
+            <input type="text" class="form-control" id="type-textbox"/>
+            <select id="number-select" class="form-select">
+                <option>Guard</option>
+                <option>Center</option>
+                <option>Kick Person</option>
+            </select>
+            <button class="btn btn-primary flex-grow-1" type="submit" onclick="addToTable(event)">Add&nbsp;to&nbsp;Table</button>
+        </form>
+        <table class="table table-striped">
+            <tbody id="items-table">
+            </tbody>
+        </table>
+    </div>
+
     <script>
-        const makeButton = document.getElementById("make-button")
-        makeButton.addEventListener("click", makeIt)
+        const createTextbox = document.getElementById("create-textbox")
+        const typeTextbox = document.getElementById("type-textbox")
+        const numberSelect = document.getElementById("number-select")
+        const tableBody = document.querySelector("#items-table")
+        
 
-        const makeInput = document.getElementById("make-input")
-        const makeList = document.getElementById("make-list")
+        function addToTable(event) {
+            event.preventDefault() // prevent the default behavior of the event = refreshing the page
 
+            // get what's in the textbox
+            // make a new table row and cells with the text from the textbox
+            const newRow = document.createElement("tr") // <tr></tr>
+            newRow.innerHTML = `
+                <td>${createTextbox.value}</td>
+                <td>${typeTextbox.value}</td>
+                <td>${numberSelect.value}</td>
+                <td>${new Date(Date.now()).toLocaleDateString()}</td>
+                <td><button class="btn btn-danger">Delete</button></td>
+            ` // <tr><td>hello</td></tr>
 
-        // Data (state)
-        const todoList = []
+            // easy little trick
+            newRow.querySelector("button").addEventListener("click", function() {
+                newRow.remove()
+            }) // little baby function will remember what the newRow variable had in it when the function was created
 
+            // add them to the table
+            tableBody.appendChild(newRow)
 
-        // Event handler functions
-        function makeIt() {
-
-            const newBabyLi = document.createElement("li") // make the li soul in the Great Before  
-
-            newBabyLi.textContent = makeInput.value
-
-            todoList.push(makeInput.value)
-
-            newBabyLi.addEventListener("click", () => {
-                const indexToDelete = todoList.indexOf(makeInput.value) 
-                todoList.splice(indexToDelete, 1) // broken
-                newBabyLi.remove()
-            })
-
-            makeList.appendChild(newBabyLi) // move it from great before to ul (give it an earth pass)
-
-            makeInput.value = ""
-        }
-
-        function clearAll() {
-            while (makeList.hasChildNodes()) {
-                makeList.removeChild(makeList.lastChild)
-            }
+            // clear out the textbox
+            createTextbox.value = ""
+            typeTextbox.value = ""
         }
 
     </script>
@@ -57,5 +66,7 @@
 
 </html>
 
-
 <!-- GREAT BEFORE -->
+
+
+
