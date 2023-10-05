@@ -11,54 +11,68 @@
 
 <body>
     <div class="container mt-4">
-        <form class="d-flex gap-3 mb-3 align-items-center">
-            <input type="text" class="form-control" id="create-textbox"/>
-            <input type="text" class="form-control" id="type-textbox"/>
-            <select id="number-select" class="form-select">
-                <option>Guard</option>
-                <option>Center</option>
-                <option>Kick Person</option>
-            </select>
-            <button class="btn btn-primary flex-grow-1" type="submit" onclick="addToTable(event)">Add&nbsp;to&nbsp;Table</button>
+        <form>
+            <input type="text" id="input-textbox" />
+            <button onclick="onButtonClick(event)">Click Me</button>
         </form>
-        <table class="table table-striped">
-            <tbody id="items-table">
+        <button onclick="clearTheTable()">Temper Tantrum</button>
+        <h3>My Favorite People</h3>
+        <table>
+            <tbody id="table-body">
+
             </tbody>
         </table>
     </div>
 
-    <script>
-        const createTextbox = document.getElementById("create-textbox")
-        const typeTextbox = document.getElementById("type-textbox")
-        const numberSelect = document.getElementById("number-select")
-        const tableBody = document.querySelector("#items-table")
-        
+    <script> // putting javascript straight in here for convenience of demo
 
-        function addToTable(event) {
-            event.preventDefault() // prevent the default behavior of the event = refreshing the page
+        // state = data for the app
+        let favoriteList = []
 
-            // get what's in the textbox
-            // make a new table row and cells with the text from the textbox
-            const newRow = document.createElement("tr") // <tr></tr>
+        const tableBody = document.getElementById("table-body")
+        const input = document.querySelector("#input-textbox")
+
+        function onButtonClick(event) {
+            // don't refresh the page please
+            event.preventDefault() // prevents the default behavior of the event (which in this case, is refreshing the page)
+
+            const textToAdd = input.value
+
+            // make the change to the data
+            favoriteList.push(textToAdd)
+
+            // made a new little <tr> soul in The Great Before (but it's not in the page/earth yet)
+            const newRow = document.createElement("tr")
             newRow.innerHTML = `
-                <td>${createTextbox.value}</td>
-                <td>${typeTextbox.value}</td>
-                <td>${numberSelect.value}</td>
-                <td>${new Date(Date.now()).toLocaleDateString()}</td>
-                <td><button class="btn btn-danger">Delete</button></td>
-            ` // <tr><td>hello</td></tr>
+                <td>${textToAdd}</td>
+                <td><button id="delete-button" class="btn btn-danger">Delete</button></td>
+            `
 
-            // easy little trick
-            newRow.querySelector("button").addEventListener("click", function() {
+            newRow.querySelector("#delete-button").addEventListener("click", () => { // Event listener
+                // remove it from the data
+                const indexToRemove = favoriteList.indexOf(textToAdd)
+                favoriteList.splice(indexToRemove, 1)
+
+                // remove it from the page (UI / HTML)
                 newRow.remove()
-            }) // little baby function will remember what the newRow variable had in it when the function was created
+            })
 
-            // add them to the table
+            // Give soul an earth pass (move it into the page)
             tableBody.appendChild(newRow)
 
-            // clear out the textbox
-            createTextbox.value = ""
-            typeTextbox.value = ""
+            // clear the textbox
+            input.value = ""
+        }
+
+        // Event listener
+        function clearTheTable() {
+            // Remove from the data
+            favoriteList = []
+
+            // Remove from the HTML
+            while (tableBody.hasChildNodes()) {
+                tableBody.removeChild(tableBody.lastChild)
+            }
         }
 
     </script>
@@ -66,7 +80,4 @@
 
 </html>
 
-<!-- GREAT BEFORE -->
-
-
-
+<!-- THE GREAT BEFORE -->
