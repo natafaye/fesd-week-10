@@ -11,68 +11,56 @@
 
 <body>
     <div class="container mt-4">
-        <form>
-            <input type="text" id="input-textbox" />
-            <button onclick="onButtonClick(event)">Click Me</button>
+        <h3>Favorite Movies</h3>
+        <form class="d-flex gap-2">
+            <input id="movie-title-input" type="text" class="form-control form-control-sm" />
+            <input id="movie-genre-input" type="text" class="form-control form-control-sm" />
+            <button onclick="addMovie(event)" class="btn btn-sm btn-outline-success">Add</button>
         </form>
-        <button onclick="clearTheTable()">Temper Tantrum</button>
-        <h3>My Favorite People</h3>
-        <table>
-            <tbody id="table-body">
-
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Genre</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="movie-table-body">
             </tbody>
         </table>
     </div>
 
     <script> // putting javascript straight in here for convenience of demo
+        const titleInput = document.getElementById("movie-title-input")
+        const genreInput = document.querySelector("#movie-genre-input")
+        const movieTableBody = document.getElementById("movie-table-body")
 
-        // state = data for the app
-        let favoriteList = []
+        function addMovie(event) {
+            // prevent the page from refreshing
+            event.preventDefault()
 
-        const tableBody = document.getElementById("table-body")
-        const input = document.querySelector("#input-textbox")
-
-        function onButtonClick(event) {
-            // don't refresh the page please
-            event.preventDefault() // prevents the default behavior of the event (which in this case, is refreshing the page)
-
-            const textToAdd = input.value
-
-            // make the change to the data
-            favoriteList.push(textToAdd)
-
-            // made a new little <tr> soul in The Great Before (but it's not in the page/earth yet)
-            const newRow = document.createElement("tr")
-            newRow.innerHTML = `
-                <td>${textToAdd}</td>
-                <td><button id="delete-button" class="btn btn-danger">Delete</button></td>
+            // Make a new tr soul
+            const newBabyTr = document.createElement("tr")
+            // Set the innerHTML of that soul with a template literal
+            newBabyTr.innerHTML = `
+                <td>${titleInput.value}</td>
+                <td>${genreInput.value}</td>
+                <td><button id="delete-button" class="btn btn-sm btn-outline-danger">Delete</button></td>
             `
 
-            newRow.querySelector("#delete-button").addEventListener("click", () => { // Event listener
-                // remove it from the data
-                const indexToRemove = favoriteList.indexOf(textToAdd)
-                favoriteList.splice(indexToRemove, 1)
-
-                // remove it from the page (UI / HTML)
-                newRow.remove()
+            // fun little trick to grab the button
+            // then add an event listener to that button
+            // give it a callback function to call when the click event happens
+            newBabyTr.querySelector("#delete-button").addEventListener("click", () => {
+                newBabyTr.remove()
             })
 
-            // Give soul an earth pass (move it into the page)
-            tableBody.appendChild(newRow)
+            // give the soul an earth pass (move it into the page)
+            movieTableBody.appendChild(newBabyTr)
 
-            // clear the textbox
-            input.value = ""
-        }
-
-        // Event listener
-        function clearTheTable() {
-            // Remove from the data
-            favoriteList = []
-
-            // Remove from the HTML
-            while (tableBody.hasChildNodes()) {
-                tableBody.removeChild(tableBody.lastChild)
-            }
+            // Clear the inputs
+            titleInput.value = ""
+            genreInput.value = ""
         }
 
     </script>
