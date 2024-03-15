@@ -11,56 +11,51 @@
 
 <body>
     <div class="container mt-4">
-        <h3>Favorite Movies</h3>
+        <h3>Grocery List</h3>
         <form class="d-flex gap-2">
-            <input id="movie-title-input" type="text" class="form-control form-control-sm" />
-            <input id="movie-genre-input" type="text" class="form-control form-control-sm" />
-            <button onclick="addMovie(event)" class="btn btn-sm btn-outline-success">Add</button>
+            <input id="new-textbox" type="text" class="form-control"/>
+            <button class="btn btn-primary" onclick="handleAddClick(event)">Add</button>
         </form>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Genre</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody id="movie-table-body">
-            </tbody>
-        </table>
+        <button onclick="clearList()">Clear the List</button>
+        <ul id="list"></ul>
     </div>
 
     <script> // putting javascript straight in here for convenience of demo
-        const titleInput = document.getElementById("movie-title-input")
-        const genreInput = document.querySelector("#movie-genre-input")
-        const movieTableBody = document.getElementById("movie-table-body")
 
-        function addMovie(event) {
-            // prevent the page from refreshing
-            event.preventDefault()
+        const shoppingList = []
+        
+        const textbox = document.getElementById("new-textbox")
+        const list = document.querySelector("#list")
 
-            // Make a new tr soul
-            const newBabyTr = document.createElement("tr")
-            // Set the innerHTML of that soul with a template literal
-            newBabyTr.innerHTML = `
-                <td>${titleInput.value}</td>
-                <td>${genreInput.value}</td>
-                <td><button id="delete-button" class="btn btn-sm btn-outline-danger">Delete</button></td>
+        function handleAddClick(event) {
+            event.preventDefault() // prevent the page from refreshing
+
+            // Makes a new li soul in The Great Before
+            const newLi = document.createElement("li")
+
+            // Put the textbox text into the li
+            newLi.innerHTML = `
+                <span>${textbox.value}</span>
+                <button class="btn btn-danger ms-3" id="delete-button">Delete</button>
             `
+            newLi.querySelector("#delete-button").addEventListener("click", () => {
+                newLi.remove()
 
-            // fun little trick to grab the button
-            // then add an event listener to that button
-            // give it a callback function to call when the click event happens
-            newBabyTr.querySelector("#delete-button").addEventListener("click", () => {
-                newBabyTr.remove()
+                // TODO: remove from shoppingList
             })
 
-            // give the soul an earth pass (move it into the page)
-            movieTableBody.appendChild(newBabyTr)
+            // Give it an earth pass and move it into the page
+            list.appendChild(newLi)
 
-            // Clear the inputs
-            titleInput.value = ""
-            genreInput.value = ""
+            // Also save the data in the code
+            shoppingList.push(textbox.value)
+
+            // Clear the textbox
+            textbox.value = ""
+        }
+
+        function clearList() {
+            list.innerHTML = "" // this is crappy
         }
 
     </script>
