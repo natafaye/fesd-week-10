@@ -7,55 +7,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
     <div class="container mt-4">
-        <h3>Grocery List</h3>
-        <form class="d-flex gap-2">
-            <input id="new-textbox" type="text" class="form-control"/>
-            <button class="btn btn-primary" onclick="handleAddClick(event)">Add</button>
-        </form>
-        <button onclick="clearList()">Clear the List</button>
-        <ul id="list"></ul>
+        <h3>Scratch</h3>
+        <div id="header">
+            <h4>Messages</h4>
+            <p>You have <span id="num-msg">0</span> new messages</p>
+        </div>
+        <p>What color?</p>
+        <input type="text" id="color-input"/>
+        <button onclick="onOKClick()">OK</button>
+        <div id="container">
+            This is the container
+        </div>
     </div>
 
-    <script> // putting javascript straight in here for convenience of demo
+    <script>
 
-        const shoppingList = []
-        
-        const textbox = document.getElementById("new-textbox")
-        const list = document.querySelector("#list")
+        // javascript code can go right here
+        // we do don't do this often, but it's nice for playing around
 
-        function handleAddClick(event) {
-            event.preventDefault() // prevent the page from refreshing
+        const container = document.getElementById("container")
+        const colorTextbox = document.getElementById("color-input")
 
-            // Makes a new li soul in The Great Before
-            const newLi = document.createElement("li")
+        function onOKClick() {
+            // Makes the soul in the Great Before
+            const babyDiv = document.createElement("div")
+            babyDiv.textContent = colorTextbox.value
+            babyDiv.className = "p-2 text-white"
+            babyDiv.style.backgroundColor = colorTextbox.value
 
-            // Put the textbox text into the li
-            newLi.innerHTML = `
-                <span>${textbox.value}</span>
-                <button class="btn btn-danger ms-3" id="delete-button">Delete</button>
-            `
-            newLi.querySelector("#delete-button").addEventListener("click", () => {
-                newLi.remove()
-
-                // TODO: remove from shoppingList
+            // listen to a click on the baby div
+            babyDiv.addEventListener("click", () => {
+                babyDiv.remove()
             })
 
-            // Give it an earth pass and move it into the page
-            list.appendChild(newLi)
+            // Gives it an earth pass so it's in the page
+            // Moves it from the Great Before into the page
+            container.appendChild(babyDiv)
 
-            // Also save the data in the code
-            shoppingList.push(textbox.value)
+            // This is best for very dynamic
+            // container.style.backgroundColor = colorTextbox.value
+            // container.style.height = "300px"
 
-            // Clear the textbox
-            textbox.value = ""
-        }
-
-        function clearList() {
-            list.innerHTML = "" // this is crappy
+            //container.className = "red-background"
         }
 
     </script>
@@ -63,4 +61,5 @@
 
 </html>
 
-<!-- THE GREAT BEFORE -->
+<!-- GREAT BEFORE -->
+
