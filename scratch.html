@@ -1,65 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-    <div class="container mt-4">
-        <h3>Scratch</h3>
-        <div id="header">
-            <h4>Messages</h4>
-            <p>You have <span id="num-msg">0</span> new messages</p>
-        </div>
-        <p>What color?</p>
-        <input type="text" id="color-input"/>
-        <button onclick="onOKClick()">OK</button>
-        <div id="container">
-            This is the container
-        </div>
-    </div>
+    <form>
+        <input type="text" id="add-textbox" onkeydown="handleTextboxType(event)"/>
+        <button onclick="handleAddClick(event)">Add</button>
+    </form>
+    <ul id="list"></ul>
 
     <script>
+        const myList = document.querySelector("#list")
+        const myTextbox = document.getElementById("add-textbox")
 
-        // javascript code can go right here
-        // we do don't do this often, but it's nice for playing around
+        // Event Handler = handles the user event
+        function handleAddClick(e) {
+            // Prevent the default behavior = prevent refreshing the page
+            e.preventDefault()
 
-        const container = document.getElementById("container")
-        const colorTextbox = document.getElementById("color-input")
+            // making a new element soul
+            const babyLi = document.createElement("li")
 
-        function onOKClick() {
-            // Makes the soul in the Great Before
-            const babyDiv = document.createElement("div")
-            babyDiv.textContent = colorTextbox.value
-            babyDiv.className = "p-2 text-white"
-            babyDiv.style.backgroundColor = colorTextbox.value
+            // Setting up the new element
+            babyLi.textContent = myTextbox.value
 
-            // listen to a click on the baby div
-            babyDiv.addEventListener("click", () => {
-                babyDiv.remove()
+            // Hook up event listener to our dynamically created li
+            babyLi.addEventListener("click", () => {
+                babyLi.remove()
             })
 
-            // Gives it an earth pass so it's in the page
-            // Moves it from the Great Before into the page
-            container.appendChild(babyDiv)
+            // give it an earth pass = move it into the page to its parent
+            myList.appendChild(babyLi)
 
-            // This is best for very dynamic
-            // container.style.backgroundColor = colorTextbox.value
-            // container.style.height = "300px"
-
-            //container.className = "red-background"
+            // clear out textbox
+            myTextbox.value = ""
         }
 
+        function handleTextboxType(event) {
+            if(event.key === "Enter") {
+                handleAddClick(event)
+            }
+        }
     </script>
 </body>
-
 </html>
 
-<!-- GREAT BEFORE -->
-
+<!--- THE GREAT BEFORE -->
