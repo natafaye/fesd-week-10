@@ -15,3 +15,8 @@ function addTask() {
 
     taskList.appendChild(newBabyLi) // move it into the page
 }
+
+
+// <li onclick="newBabyLi.remove()"></li>
+// <li onclick="newBabyLi.remove()"></li>
+// <li onclick="newBabyLi.remove()"></li>

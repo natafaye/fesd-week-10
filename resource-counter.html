@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container mt-3">
+        <h2>Cascadia Roll And Write Resources</h2>
+        <input type="text" id="add-input"/>
+        <button onclick="addResource()">Add</button>
+        <button onclick="clearResources()">Clear All</button>
+        <div id="resources-container">
+            <div>
+                <h4>Foxes</h4>
+                <button class="btn btn-light btn-lg" onclick="incrementFoxes()">+</button>
+                <span id="fox-span">3</span>
+                <button class="btn btn-light btn-lg" onclick="decrementFoxes()">-</button>
+            </div>
+        </div>
+    </div>
+    <script src="resource-counter.js"></script>
+</body>
+
+</html>
