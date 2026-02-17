@@ -1,54 +1,71 @@
-// const paragraph = document.getElementById("special-paragraph")
-// console.log(paragraph)
 
-const myTextbox = document.querySelector("#textbox-thing")
-console.log(myTextbox)
+// Data
+let cheesePoints = 0
 
-const paragraphContainer = document.getElementById("paragraph-container")
 
-// paragraph.style.height = "3rem"
-// paragraph.style.backgroundColor = "lightblue"
-// paragraph.style.border = "3px solid green"
+// Finding
+const textbox = document.getElementById("textbox")
+const cheesePointsSpan = document.getElementById("cheese-points-display")
+const corralDiv = document.querySelector("#corral")
 
-// value property on input DOM nodes
 
-const messages = []
+function startGame() {
+    // Reset cheese points
+    cheesePoints = 0
+    cheesePointsSpan.textContent = cheesePoints
 
-function onButtonClick() {
-    // Also add it to the data
-    messages.push(myTextbox.value)
+    // Clear out any old cows
+    corralDiv.innerHTML = ""
 
-    // Make a new little paragraph soul
-    const paraSoul = document.createElement("p")
+    // Make a cow every half a second
+    const cowMakingInterval = setInterval(() => {
+        makeACow()
+    }, 500)
 
-    // Set the text of the paragraph to the value of the textbox
-    paraSoul.textContent = myTextbox.value
-
-    // Listen to clicks on the paragraph
-    paraSoul.addEventListener("click", () => {
-        // Have it remove itself from the page
-        paraSoul.remove()
-    })
-
-    // const paraSoul2 = paraSoul.cloneNode(true)
-
-    // Move the paragraph from the Great Before to the page
-    paragraphContainer.appendChild(paraSoul)
-    // paragraphContainer.appendChild(paraSoul2)
-
-    // Clear out the textbox
-    myTextbox.value = ""
+    // After 10 seconds, end the game
+    setTimeout(() => {
+        // Stop making cows every half second
+        clearInterval(cowMakingInterval)
+        // Tell you your score!
+        alert("Your score is: " + cheesePoints)
+    }, 10000)
 }
 
-function clearAll() {
-    // Option 1: Keep asking the node to disown it's youngest child
-    // while (paragraphContainer.lastChild) {
-    //     paragraphContainer.removeChild(paragraphContainer.lastChild)
-    // }
 
-    // Option 2: You don't have any children
-    // paragraphContainer.innerHTML = ""
+// <div id="cow" class="super-big-text" onclick="onCowClick()">🐄</div>
 
-    // Option 3: Replace the children with nothing
-    paragraphContainer.replaceChildren()
+// Scope: variables are trapped inside the curly brackets they are created inside
+
+function makeACow() {
+    // Step 1: Make a new element soul with document.createElement()
+    const cowDiv = document.createElement("div")
+    cowDiv.textContent = "🐄"
+    cowDiv.style.left = Math.floor(Math.random() * 30) + "rem"
+    cowDiv.style.top = Math.floor(Math.random() * 30) + "rem"
+    cowDiv.className = "cow"
+    // Hook up the event listener so that when you click on the cow
+    // it call onCowClick()
+    cowDiv.addEventListener("click", () => {
+        cowDiv.textContent = "🧀"
+        // Update cheese points
+        cheesePoints++
+        cheesePointsSpan.textContent = cheesePoints
+        // Wait 2 seconds then call this function that removes the cow div
+        setTimeout(() => {
+            cowDiv.remove()
+        }, 2000)
+    })
+    // Step 2: Move it into the page with PARENT.appendChild(CHILD)
+    corralDiv.appendChild(cowDiv)
+}
+
+
+// Listening
+function onButtonClick() {
+    // Updating
+    // cowDiv.style.border = "1px solid white"
+    // cowDiv.style.fontSize = "2rem"
+    // cowDiv.className = "bg-primary p-5"
+    // cowDiv.textContent += "Moo!"
+    // textbox.style.backgroundColor = "pink"
 }

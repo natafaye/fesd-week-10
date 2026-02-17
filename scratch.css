@@ -1,0 +1,17 @@
+body {
+    background-color: rgb(118, 94, 75);
+}
+
+.cow {
+    font-size: 8rem;
+    position: absolute;
+}
+
+.corral {
+    width: 40rem;
+    height: 40rem;
+    border: 5px dashed white;
+    margin-top: 2rem;
+    position: relative;
+    user-select: none;
+}

@@ -4,18 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="scratch.css">
 </head>
 <body>
-    <div>
-        <input type="text" id="textbox-thing"/>
-        <button onclick="onButtonClick()">Send</button>
-        <button onclick="clearAll()">Clear All Paragraphs</button>
-        <div id="paragraph-container">
+    <div class="container mt-3">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2 class="text-white display-3">Churn a Cow</h2>
+            <div class="text-white fs-2">
+                <span id="cheese-points-display">0</span>🧀
+            </div>
+        </div>
+        <input type="text" class="form-control mb-3" id="textbox"/>
+        <button class="btn btn-success btn-lg mt-3" onclick="startGame()">Start Game</button>
+        <div id="corral" class="corral">
         </div>
     </div>
 
+    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
     <script src="scratch.js"></script>
 </body>
 </html>
 
-<!-- GREAT BEFORE PRETEND -->
+
+<!-- GREAT BEFORE -->
